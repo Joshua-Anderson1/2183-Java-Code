@@ -9,12 +9,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
+import frc.robot.subsystems.Controllers;
+
 /**
  * An example command.  You can replace me with your own command.
  */
-public class EndgameElevation extends Command {
-  public EndgameElevation() {
+public class Print extends Command {
+  public Print() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.controllers);
   }
@@ -27,7 +28,7 @@ public class EndgameElevation extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-      RobotMap.endgameElevator.set(-1.0);
+    Robot.controllers.test();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -39,7 +40,6 @@ public class EndgameElevation extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-      RobotMap.endgameElevator.set(0.0);
   }
 
   // Called when another command which requires one or more of the same

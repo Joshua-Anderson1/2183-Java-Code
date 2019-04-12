@@ -2,6 +2,8 @@ package frc.robot.oi;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.DriverStation;
+import frc.robot.Robot;
 
 /**
  * Contains functions for use with the Logitech F310 controller.
@@ -10,7 +12,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * @author articgrayling8x8@gmail.com (Dorian Chan)
  * @author kevinsundar@gmail.com (Kevin Vincent)
  */
-public class F310 extends Joystick {
+public class F310 extends Joystick{
   // Gamepad axis ports
   public static final int AXIS_LEFT_X = 0;
   public static final int AXIS_LEFT_Y = 1;
@@ -38,105 +40,107 @@ public class F310 extends Joystick {
   /**
    * Constructor that creates a Joystick object.
    */
-  public F310(int gamepadPort) {
-    super(gamepadPort);
-  }
+  public F310(int port) {
+		//needed to call super constructor in order for F310 to extend Joystick
+		super(port);	
+	}
 
   /**
    * Returns the X position of the left stick.
    */
-  public double getLeftX() {
-    return getRawAxis(AXIS_LEFT_X);
+  /*public double getLeftX() {
+    return getStickAxis(stick, AXIS_LEFT_X);
   }
 
   /**
    * Returns the X position of the right stick.
    */
-  public double getRightX() {
-    return getRawAxis(AXIS_RIGHT_X);
+  /*public double getRightX(int stick) {
+    return getStickAxis(stick, AXIS_RIGHT_X);
   }
 
   /**
    * Returns the Y position of the left stick.
    */
-  public double getLeftY() {
-    return getRawAxis(AXIS_LEFT_Y);
+ /* public double getLeftY(int stick) {
+    return getStickAxis(stick, AXIS_LEFT_Y);
   }
 
   /**
    * Returns the Y position of the right stick.
    */
-  public double getRightY() {
-    return getRawAxis(AXIS_RIGHT_Y);
+ /* public double getRightY(int stick) {
+    return getStickAxis(stick, AXIS_RIGHT_Y);
   }
-
+*/
   /**
    * Checks whether Button A is being pressed and returns true if it is.
    */
+  /*
   public boolean getButtonStateA() {
     return getRawButton(BUTTON_A);
   }
 
   /**
    * Checks whether Button B is being pressed and returns true if it is.
-   */
+   
   public boolean getButtonStateB() {
     return getRawButton(BUTTON_B);
   }
 
   /**
    * Checks whether Button X is being pressed and returns true if it is.
-   */
+   
   public boolean getButtonStateX() {
     return getRawButton(BUTTON_X);
   }
 
   /**
    * Checks whether Button Y is being pressed and returns true if it is.
-   */
+   
   public boolean getButtonStateY() {
     return getRawButton(BUTTON_Y);
   }
 
   /**
    * Returns an object of Button A.
-   */
+   
   public JoystickButton getButtonA() {
     return new JoystickButton(this, BUTTON_A);
   }
 
   /**
    * Returns an object of Button B.
-   */
+   
   public JoystickButton getButtonB() {
     return new JoystickButton(this, BUTTON_B);
   }
 
   /**
    * Returns an object of Button X.
-   */
+   
   public JoystickButton getButtonX() {
     return new JoystickButton(this, BUTTON_X);
   }
 
   /**
    * Returns an object of Button Y.
-   */
+   
   public JoystickButton getButtonY() {
     return new JoystickButton(this, BUTTON_Y);
   }
 
   /**
    * Return the DPad axis positions.
-   */
+   
   public double getDPadX() {
     return getRawAxis(AXIS_DPAD);
-  }
+  }*/
 
   /**
    * DPad Left and Right only
    * WPILIB cannot access the vertical axis of the Logitech Game Controller Dpad
-   */
+   
 
   public boolean getDPadLeft() {
     double x = getDPadX();
@@ -146,33 +150,33 @@ public class F310 extends Joystick {
   public boolean getDPadRight() {
     double x = getDPadX();
     return (x > 0.5);
-  }
+  }*/
 
   /**
    * Gets the state of the Start button
    * @return the state of the Start button
-   */
+   
   public JoystickButton getStartButton(){
     return new JoystickButton(this, BUTTON_START);
   }
 
   public JoystickButton getBackButton() {
     return new JoystickButton(this, BUTTON_BACK);
-  }
+  }*/
 
   /**
    * Gets the state of the left shoulder
    * @return the state of the left shoulder
-   */
+   
   public JoystickButton getLeftShoulder() {
     return new JoystickButton(this, BUTTON_SHOULDER_LEFT);
-  }
+  }*/
 
   /**
    * Gets the state of the right shoulder
    * @return the state of the right shoulder
-   */
-  public JoystickButton getRightShoulder() {
+
+   public JoystickButton getRightShoulder() {
     return new JoystickButton(this, BUTTON_SHOULDER_RIGHT);
   }
 
@@ -183,12 +187,13 @@ public class F310 extends Joystick {
   public JoystickButton getRightStickClick() {
     return new JoystickButton(this, BUTTON_RIGHT_STICK);
   }
-
+/*
   public JoystickButton getLeftTriggerClick() {
     return new JoystickButton(this, BUTTON_TRIGGER_LEFT);
-  }
-
+  }*/
+/*
   public JoystickButton getRightTriggerClick() {
     return new JoystickButton(this, BUTTON_TRIGGER_RIGHT);
   }
+  */
 }

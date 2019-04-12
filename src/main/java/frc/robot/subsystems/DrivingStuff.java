@@ -8,23 +8,96 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Spark;
 import frc.robot.commands.Drive;
-
+import frc.robot.RobotMap;
+import frc.robot.subsystems.Controllers;
+import frc.robot.Robot;
+import frc.robot.oi.F310;
 /**
  * This is where the Drive motors get grouped
+ * 
  */
 public class DrivingStuff extends Subsystem {
-  public static final Spark leftFrontMotor = new Spark(2);
-  public static final Spark rightFrontMotor = new Spark(3);
-  public static final Spark leftRearMotor = new Spark(0);
-  public static final Spark rightRearMotor = new Spark(1);
- SpeedControllerGroup m_left = new SpeedControllerGroup(leftFrontMotor, leftRearMotor);
- SpeedControllerGroup m_right = new SpeedControllerGroup(rightFrontMotor, rightRearMotor);
- DifferentialDrive driveMotors = new DifferentialDrive(m_left, m_right);
- 
+  public static SpeedControllerGroup m_left = new SpeedControllerGroup(RobotMap.leftFrontMotor, RobotMap.leftRearMotor);
+  public static SpeedControllerGroup m_right = new SpeedControllerGroup(RobotMap.rightFrontMotor, RobotMap.rightRearMotor);
+  public static SpeedControllerGroup driveMotors = new SpeedControllerGroup(m_left, m_right);
+  
+  public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
+
+    // Square the inputs (while preserving the sign) to increase fine control
+    // while permitting full power.
+    if (squareInputs) {
+      xSpeed = Math.copySign(xSpeed * xSpeed, xSpeed);
+      zRotation = Math.copySign(zRotation * zRotation, zRotation);
+    }
+
+    double leftMotorOutput;
+    double rightMotorOutput;
+
+    double maxInput;
+
+    /*if(xSpeed < 0.01 && xSpeed > -0.01){
+      xSpeed = 0.0;
+    } else {
+      xSpeed = xSpeed;
+    }*/
+  
+  if(xSpeed >= -1.0){
+    if (xSpeed > 1.0) {
+      xSpeed = 1.0;
+    } else if (xSpeed < -1.0) {
+      xSpeed = -1.0;
+    } else {
+      xSpeed = xSpeed;
+    }
+  }
+
+  if(zRotation >= -1.0){
+    if (zRotation > 1.0) {
+      zRotation = 1.0;
+    } else if (zRotation < -1.0) {
+      zRotation = -1.0;
+    } else {
+      zRotation = zRotation;
+    }
+  }
+      if(xSpeed > 0.0){
+      leftMotorOutput = 1.0;
+      rightMotorOutput = -1.0;
+    } else if (xSpeed < 0.0){
+      leftMotorOutput = -1.0;
+      rightMotorOutput = 1.0;
+    } else {
+      leftMotorOutput = 0.0;
+      rightMotorOutput = 0.0;
+    }
+    /*if (xSpeed >= 0.0) {
+      // First quadrant, else second quadrant
+      if (zRotation >= 0.0) {
+        leftMotorOutput = maxInput;
+        rightMotorOutput = xSpeed - zRotation;
+      } else {
+        leftMotorOutput = xSpeed + zRotation;
+        rightMotorOutput = maxInput;
+      }
+    } else {
+      // Third quadrant, else fourth quadrant
+      if (zRotation >= 0.0) {
+        leftMotorOutput = xSpeed + zRotation;
+        rightMotorOutput = maxInput;
+      } else {
+        leftMotorOutput = maxInput;
+        rightMotorOutput = xSpeed - zRotation;
+      }
+    }
+*/
+    m_left.set(leftMotorOutput);
+    m_right.set(rightMotorOutput);
+    RobotMap.endgameElevator.set(1.0);
+
+  }
+
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new Drive());

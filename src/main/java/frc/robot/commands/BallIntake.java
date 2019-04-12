@@ -9,17 +9,15 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj.Spark;
+import frc.robot.RobotMap;
 
 /**
  * The command that makes the ball intake grab the cargo or release it
  */
 public class BallIntake extends Command {
-  public final Spark ballIntake = new Spark(5);
   public BallIntake() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.controllers);
-    requires(Robot.buttons);
   }
 
   // Called just before this Command runs the first time
@@ -30,7 +28,8 @@ public class BallIntake extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    ballIntake.set(-1.0);
+    RobotMap.ballIntake.set(-1.0);
+    System.out.println(RobotMap.ballIntake);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -42,7 +41,7 @@ public class BallIntake extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    ballIntake.set(0.0);
+    RobotMap.ballIntake.set(0.0);
   }
 
   // Called when another command which requires one or more of the same

@@ -9,20 +9,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.GenericHID;
+import frc.robot.RobotMap;
+import frc.robot.subsystems.Controllers;
 
 /**
  * The command for the endgame elevator
  */
 public class EndgameDriver extends Command {
-  public final Spark endgameDrive = new Spark(4);
-  protected Joystick driver = new Joystick(0);
-  protected double leftdriverX = driver.getRawAxis(0);
-  protected double rightDriverY = driver.getRawAxis(4);
-  double motion = rightDriverY;
+  double motion;
   public EndgameDriver() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.controllers);
@@ -31,21 +25,22 @@ public class EndgameDriver extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    double motion = rightDriverY;
+    double motion = Robot.controllers.rightDriverY;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  public void execute() {
     if (motion > 1.0){
       motion = 1.0;
     } else if (motion < -1.0){
       motion = -1.0;
     } else {
-      motion = rightDriverY;
+      motion = Robot.controllers.rightDriverY;
     }
 
-    endgameDrive.set(motion);
+    RobotMap.endgameDrive.set(motion);
+  
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -57,7 +52,7 @@ public class EndgameDriver extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    endgameDrive.set(0.0);
+    RobotMap.endgameDrive.set(0.0);
   }
 
   // Called when another command which requires one or more of the same
@@ -65,4 +60,7 @@ public class EndgameDriver extends Command {
   @Override
   protected void interrupted() {
   }
+
+public void EndgameDriver() {
+}
 }

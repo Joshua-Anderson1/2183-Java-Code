@@ -9,17 +9,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.RobotMap;
+import frc.robot.subsystems.Controllers;
 
 /**
  * The command for the elevator with the ball intake and hatch
  */
 public class Elevator extends Command {
-  public final Talon elevatorTalon = new Talon(7);
-  protected Joystick coPilot = new Joystick(1);
-  protected double coPilotY = coPilot.getY();
-  double move = coPilotY;
+  double move;
   public Elevator() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.controllers);
@@ -28,21 +25,22 @@ public class Elevator extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-      double move = coPilotY;
+      double move = Robot.controllers.coPilotY;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  public void execute() {
       if (move > 1.0){
       move = 1.0;
     } else if (move < -1.0){
       move = -1.0;
     } else {
-      move = coPilotY;
+      move = Robot.controllers.coPilotY;
     }
 
-    elevatorTalon.set(move);
+    RobotMap.elevator.set(move);
+   
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -54,7 +52,7 @@ public class Elevator extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    elevatorTalon.set(0.0);
+    RobotMap.elevator.set(0.0);
   }
 
   // Called when another command which requires one or more of the same
@@ -62,4 +60,7 @@ public class Elevator extends Command {
   @Override
   protected void interrupted() {
   }
+
+public void Elevator() {
+}
 }

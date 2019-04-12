@@ -9,13 +9,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj.Spark;
+import frc.robot.RobotMap;
 
 /**
  * The command to make the Spool for the Hatch go outwards
  */
 public class HatchOut extends Command {
-  public final Spark hatchSpool = new Spark(8);
   public HatchOut() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.controllers);
@@ -29,7 +28,8 @@ public class HatchOut extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    hatchSpool.set(-1.0);
+    RobotMap.hatchSpool.set(-1.0);
+   
   }
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -40,7 +40,7 @@ public class HatchOut extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    hatchSpool.set(0.0);
+    RobotMap.hatchSpool.set(0.0);
   }
 
   // Called when another command which requires one or more of the same

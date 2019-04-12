@@ -7,6 +7,10 @@
 
 package frc.robot.oi;
 
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.subsystems.Controllers;
+import frc.robot.Robot;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -23,7 +27,15 @@ public class OI {
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to
   // commands the same as any other Button.
-
+  public static JoystickButton SpoolIn = new JoystickButton(Robot.controllers.coPilot, F310.BUTTON_B);
+  public static JoystickButton SpoolOut = new JoystickButton(Robot.controllers.coPilot, F310.BUTTON_A);
+  public static JoystickButton BallIn = new JoystickButton(Robot.controllers.coPilot, F310.BUTTON_TRIGGER_RIGHT);
+  public static JoystickButton BallOut = new JoystickButton(Robot.controllers.coPilot, F310.BUTTON_SHOULDER_RIGHT);
+  public static JoystickButton Level1 = new JoystickButton(Robot.controllers.coPilot, F310.BUTTON_SHOULDER_LEFT);
+  public static JoystickButton Level2 = new JoystickButton(Robot.controllers.coPilot, F310.BUTTON_X);
+  public static JoystickButton Level3 = new JoystickButton(Robot.controllers.coPilot, F310.BUTTON_Y);
+  public static JoystickButton HatchGrabber = new JoystickButton(Robot.controllers.coPilot, F310.BUTTON_TRIGGER_LEFT);
+  //public static JoystickButton EndgameElevator = new JoystickButton(Robot.controllers.driver, F310.BUTTON_SHOULDER_RIGHT);
   
   
 }

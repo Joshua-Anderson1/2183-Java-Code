@@ -23,14 +23,19 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Hatch;
 import frc.robot.commands.HatchIn;
 import frc.robot.commands.HatchOut;
+import frc.robot.commands.Print;
 import frc.robot.subsystems.Controllers;
 import frc.robot.subsystems.DrivingStuff;
-import frc.robot.subsystems.Buttons;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.oi.F310;
 import frc.robot.oi.OI;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.subsystems.GripPipeline;
+import edu.wpi.first.wpilibj.MotorSafety;
+import edu.wpi.first.wpilibj.DriverStation;
+import frc.robot.subsystems.SparkyThing;
+//import any vision files here
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -43,18 +48,21 @@ public class Robot extends TimedRobot {
 
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
-  public static Subsystem buttons = new Buttons();
-  public static Subsystem controllers = new Controllers();
-  public static Subsystem drivingStuff = new DrivingStuff();
-  protected Joystick driver = new Joystick(0);
-  protected Joystick coPilot = new Joystick(1);
-  protected JoystickButton Endgame = new JoystickButton(driver, F310.BUTTON_SHOULDER_RIGHT);
-  protected JoystickButton SpoolIn = new JoystickButton(coPilot, F310.BUTTON_B);
-  protected JoystickButton SpoolOut = new JoystickButton(coPilot, F310.BUTTON_A);
-  protected JoystickButton BallIn = new JoystickButton(coPilot, F310.BUTTON_TRIGGER_RIGHT);
-  protected JoystickButton BallOut = new JoystickButton(coPilot, F310.BUTTON_SHOULDER_RIGHT);
-  protected JoystickButton HatchGrabber = new JoystickButton(coPilot, F310.BUTTON_TRIGGER_LEFT);
-  
+  public static Controllers controllers;
+  public static BallIntake ballIntake;
+  public static BallOuttake ballOuttake;
+  public static HatchIn hatchIn;
+  public static HatchOut hatchOut;
+  public static DrivingStuff drivingStuff;
+  public static Drive Drive;
+  public static Elevator Elevator;
+  public static EndgameDriver EndgameDriver;
+  public static Hatch hatch;
+  public static F310 F310;
+  public static Print print;
+  public static SparkyThing sparkyThing;
+  //new subsystem for vision tracking here//
+  // put vision initalizations here
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -64,26 +72,20 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    /* Error at frc.robot.commands.Drive.<clinit>(Drive.java:22): Unhandled exception: edu.wpi.first.hal.util.UncleanStatusException:  Code: -1029. HAL: Resource already allocated 
- 	at edu.wpi.first.hal.PWMJNI.initializePWMPort(Native Method) 
- 	at edu.wpi.first.wpilibj.PWM.<init>(PWM.java:63) 
- 	at edu.wpi.first.wpilibj.PWMSpeedController.<init>(PWMSpeedController.java:25) 
- 	at edu.wpi.first.wpilibj.Spark.<init>(Spark.java:47) 
- 	at frc.robot.commands.Drive.<clinit>(Drive.java:22) 
- 	at frc.robot.subsystems.Controllers.initDefaultCommand(Controllers.java:29) 
- 	at edu.wpi.first.wpilibj.command.Subsystem.getDefaultCommand(Subsystem.java:111) 
- 	at edu.wpi.first.wpilibj.command.Scheduler.run(Scheduler.java:241) 
- 	at frc.robot.Robot.disabledPeriodic(Robot.java:100) 
- 	at edu.wpi.first.wpilibj.IterativeRobotBase.loopFunc(IterativeRobotBase.java:212) 
- 	at edu.wpi.first.wpilibj.TimedRobot.startCompetition(TimedRobot.java:81) 
- 	at edu.wpi.first.wpilibj.RobotBase.startRobot(RobotBase.java:263) 
- 	at frc.robot.Main.main(Main.java:28) 
-
-    */
+    sparkyThing = new SparkyThing();
+    ballIntake = new BallIntake();
+    ballOuttake = new BallOuttake();
     controllers = new Controllers();
-    buttons = new Buttons();
     drivingStuff = new DrivingStuff();
+    Drive = new Drive();
+    Elevator = new Elevator();
+    EndgameDriver = new EndgameDriver();
+    hatch = new Hatch();
+    hatchIn = new HatchIn();
+    hatchOut = new HatchOut();
     m_oi = new OI();
+    print = new Print();
+    //vision = new Vision();
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
@@ -162,24 +164,13 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
   }
-//Yeet 
+//Yeetith 
   /**
    * This function is called periodically during operator control.
    */
   @Override
   public void teleopPeriodic(){
-    startCompetition();
     Scheduler.getInstance().run();
-    new Drive();
-    new Elevator();
-    new EndgameDriver();
-    Endgame.whileHeld(new EndgameElevation());
-    HatchGrabber.whileHeld(new Hatch());
-    BallIn.whileHeld(new BallIntake());
-    BallOut.whileHeld(new BallOuttake());
-    SpoolIn.whileHeld(new HatchIn());
-    SpoolOut.whileHeld(new HatchOut());
-  
   }
 
   /**

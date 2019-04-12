@@ -6,8 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Solenoid;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -20,9 +23,17 @@ public class RobotMap {
   // following variables to use with your drivetrain subsystem.
   // public static int leftMotor = 1;
   // public static int rightMotor = 2;
-
-  
-    
+  public static final Spark leftFrontMotor = new Spark(2);
+  public static final Spark rightFrontMotor = new Spark(3);
+  public static final Spark leftRearMotor = new Spark(0);
+  public static final Spark rightRearMotor = new Spark(1);
+  public static final Spark endgameDrive = new Spark(4);
+  public static final Spark ballIntake = new Spark(5);
+  public static final Spark endgameElevator = new Spark(6);
+  public static final Spark elevator = new Spark(7);
+  public static final Spark hatchSpool = new Spark(8);
+  public static final CANSparkMax newThing = new CANSparkMax(1, MotorType.kBrushless);
+  //public static final Solenoid Hatch = new Solenoid(Find out the channel it is controlled by);
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;
